@@ -1,0 +1,24 @@
+# Audio audition stems and optional local reference tracks (never committed)
+*.wav
+*.flac
+*.aiff
+*.aif
+*.m4a
+*.mp3
+reports/loopback/audition_clips/
+reports/loopback/sqam/
+reports/loopback/goldberg/
+reports/loopback/listening-notes.md
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mplconfig/
+
+# macOS and local build scratch
+.DS_Store
+.build/
+build/

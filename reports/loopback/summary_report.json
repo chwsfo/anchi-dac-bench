@@ -1,0 +1,395 @@
+{
+  "suite": "Anchi DAC \u2014 4-Day AES17 Loopback Measurement & Sonic Taste Lab",
+  "overall_passed": true,
+  "total_checks": 26,
+  "passed_checks": 26,
+  "failed_checks": 0,
+  "checks": [
+    {
+      "day": 0,
+      "metric_id": "preflight_rt_512f",
+      "name": "Real-Time RingBuffer Callback (512 frames)",
+      "condition": "44.1k -> 176.4k, 512-frame callbacks, Vintage -6 dBFS lock",
+      "measured": "0 underruns, peak -12.02 dBFS",
+      "measured_value": 0.0,
+      "threshold": "0 underruns & peak <= -5.99 dBFS",
+      "passed": true,
+      "diagnostic_note": "Zero lock contention or SPSC underruns on the real-time audio path."
+    },
+    {
+      "day": 0,
+      "metric_id": "preflight_rt_64f",
+      "name": "Real-Time RingBuffer Callback (64 frames)",
+      "condition": "44.1k -> 176.4k, 64-frame callbacks, Vintage -6 dBFS lock",
+      "measured": "0 underruns, peak -12.02 dBFS",
+      "measured_value": 0.0,
+      "threshold": "0 underruns & peak <= -5.99 dBFS",
+      "passed": true,
+      "diagnostic_note": "Zero lock contention or SPSC underruns on the real-time audio path."
+    },
+    {
+      "day": 1,
+      "metric_id": "day1_passthrough_null",
+      "name": "Passthrough Null Error",
+      "condition": "Passthrough (10 Hz - 0.49 fs, 10s Farina Chirp)",
+      "measured": "-300.0 dBFS (\u00b10.0000 dB)",
+      "measured_value": -300.0,
+      "threshold": "Residual < -180.0 dBFS",
+      "passed": true,
+      "diagnostic_note": "Bit-exact Float64 transport with zero hidden gain scaling."
+    },
+    {
+      "day": 1,
+      "metric_id": "day1_passband_flatness",
+      "name": "Passband Flatness (Linear & PRaT Min-Phase)",
+      "condition": "20 Hz - 19.0 kHz (@44.1k) & 20 Hz - 20.0 kHz (@48k/192k)",
+      "measured": "\u00b10.00000 dB",
+      "measured_value": 3.908578753473579e-06,
+      "threshold": "<= \u00b10.0050 dB",
+      "passed": true,
+      "diagnostic_note": "Ruler-flat across entire pre-apodizing passband in both phase topologies."
+    },
+    {
+      "day": 1,
+      "metric_id": "day1_passband_ripple",
+      "name": "Passband Ripple (Linear Phase)",
+      "condition": "Gaussian-Apodizing 20 Hz - 18.8 kHz (@44.1k) & 20 kHz (@48k)",
+      "measured": "\u00b10.000000 dB (0.000000 dB p-p)",
+      "measured_value": 4.871055413856139e-08,
+      "threshold": "< \u00b10.0010 dB",
+      "passed": true,
+      "diagnostic_note": "Pedestal-zeroed Gaussian window eliminates Parks-McClellan equiripple coloration."
+    },
+    {
+      "day": 1,
+      "metric_id": "day1_gaussian_rolloff_20k",
+      "name": "Craven Gaussian-Apodizing Rolloff @ 20.0 kHz",
+      "condition": "44.1k -> 176.4k (target -0.60 dB; 22.00 kHz > 140 dB null)",
+      "measured": "-0.601 dB (22.0k: -144.8 dB)",
+      "measured_value": 0.0010730886065527523,
+      "threshold": "-0.60 \u00b1 0.15 dB @ 20 kHz",
+      "passed": true,
+      "diagnostic_note": "Matches Anchi Sonic POV spec: strips baked-in 22.05 kHz Red Book ADC pre-echo."
+    },
+    {
+      "day": 1,
+      "metric_id": "day1_stopband_sync",
+      "name": "Stopband Image Attenuation (Synchronous)",
+      "condition": "19.1 kHz @ -1 dBFS (44.1k -> 176.4k, N=262k, 8x avg)",
+      "measured": "183.2 dB (25.0k image: -184.2 dBFS)",
+      "measured_value": 183.17750170965672,
+      "threshold": ">= 130.0 dB (<= -131 dBFS)",
+      "passed": true,
+      "diagnostic_note": "25.0 kHz & 63.2 kHz Nyquist mirrors suppressed to -184.2 / -214.1 dBFS; CCIF 1 kHz IMD -234.9 dBFS."
+    },
+    {
+      "day": 1,
+      "metric_id": "day1_stopband_async",
+      "name": "Asynchronous Stopband Rejection",
+      "condition": "19.1 kHz @ -1 dBFS (44.1k -> 96k & 192k non-integer)",
+      "measured": "183.4 dB (worst spur: -184.4 dBFS)",
+      "measured_value": 183.39393600218114,
+      "threshold": ">= 125.0 dB",
+      "passed": true,
+      "diagnostic_note": "64-bit r8brain rational stage eliminates polyphase enharmonic birdies."
+    },
+    {
+      "day": 1,
+      "metric_id": "day1_channel_balance",
+      "name": "Channel Balance (L / R)",
+      "condition": "Stepped sines 20 Hz - 20 kHz",
+      "measured": "\u00b10.000000 dB",
+      "measured_value": 0.0,
+      "threshold": "<= \u00b10.0001 dB",
+      "passed": true,
+      "diagnostic_note": "Identical 64-bit polyphase kernels lock phantom center vocal focus."
+    },
+    {
+      "day": 2,
+      "metric_id": "day2_16_to_24_thdn",
+      "name": "16-bit In -> 24-bit Out THD+N & SFDR",
+      "condition": "997 Hz @ -1 dBFS (44.1k -> 176.4k)",
+      "measured": "THD+N -94.51 dB (0.00188%), SFDR 129.9 dB",
+      "measured_value": -94.5137770638987,
+      "threshold": "THD+N <= -93.0 dB & SFDR >= 110.0 dB",
+      "passed": true,
+      "diagnostic_note": "Preserves full Red Book 16-bit dynamic range with zero upsampler spurs."
+    },
+    {
+      "day": 2,
+      "metric_id": "day2_24_tpdf_thdn",
+      "name": "24-bit In -> 24-bit TPDF Out Matrix",
+      "condition": "10 rate pairs + 41 Hz pole + 6,997 Hz slew @ -1 dBFS",
+      "measured": "Worst THD+N -140.88 dB, Min SFDR 178.3 dB",
+      "measured_value": -140.879106881873,
+      "threshold": "THD+N <= -140.0 dB & SFDR >= 155.0 dB",
+      "passed": true,
+      "diagnostic_note": "41 Hz@192k pole stress: -147.3 dB; 6,997 Hz slew: -146.9 dB (H2..H9 buried under TPDF)."
+    },
+    {
+      "day": 2,
+      "metric_id": "day2_32f_to_32f_thdn",
+      "name": "32-bit Float -> 32-bit Float Transport",
+      "condition": "997 Hz @ -1 dBFS (44.1k -> 176.4k)",
+      "measured": "THD+N -152.05 dB, SFDR 179.6 dB",
+      "measured_value": -152.04562539536334,
+      "threshold": "THD+N <= -148.0 dB & SFDR >= 160.0 dB",
+      "passed": true,
+      "diagnostic_note": "64-bit C++17 internal path is completely invisible beneath CoreAudio Float32 ceiling."
+    },
+    {
+      "day": 2,
+      "metric_id": "day2_low_level_linearity",
+      "name": "Low-Level Linearity @ -60.0 dBFS (24-bit)",
+      "condition": "997 Hz @ -60.0 dBFS (44.1k -> 176.4k, 24-bit TPDF)",
+      "measured": "Err +0.0000 dB, Max Spur -183.5 dBFS",
+      "measured_value": 6.137401840078383e-07,
+      "threshold": "Err <= \u00b10.02 dB & Spurs <= -165.0 dBFS",
+      "passed": true,
+      "diagnostic_note": "Zero zero-crossing distortion or idle-tone whistles in quiet passages."
+    },
+    {
+      "day": 2,
+      "metric_id": "day2_multitone_32",
+      "name": "32-Tone Multitone Density (44.1k -> 192k)",
+      "condition": "32 log-spaced tones 20 Hz - 20 kHz (-18 dBFS RMS, 24-bit LNS)",
+      "measured": "TD+N -147.95 dB, Grass -194.7 dBFS",
+      "measured_value": -147.94789001080625,
+      "threshold": "TD+N <= -136.0 dB & Grass <= -155.0 dBFS",
+      "passed": true,
+      "diagnostic_note": "Dead-black valley floor between all 32 pickets preserves busy orchestral layering."
+    },
+    {
+      "day": 3,
+      "metric_id": "day3_pre_ringing",
+      "name": "Impulse Pre-Ringing (Linear Symmetry vs PRaT Causal)",
+      "condition": "Dirac 0.5 @ 48.0k -> 192.0k (Dither OFF)",
+      "measured": "Lin sym \u00b10.000000% | PRaT pre-t0 -260.0 dBFS",
+      "measured_value": -260.0,
+      "threshold": "Lin sym <= \u00b10.01% & PRaT pre-t0 <= -145 dBFS",
+      "passed": true,
+      "diagnostic_note": "Exact Type-II linear symmetry vs zero-pre-echo Cepstral Minimum-Phase wavefront."
+    },
+    {
+      "day": 3,
+      "metric_id": "day3_post_ringing_decay",
+      "name": "Post-Ringing Decay Below -120 dB",
+      "condition": "48.0k -> 192.0k Impulse Envelope",
+      "measured": "PRaT 3.36 ms (< 3.5 ms) | Lin post-tap -400.0 dB",
+      "measured_value": 3.359375,
+      "threshold": "PRaT < 3.50 ms & Lin <= -120 dB within tap window",
+      "passed": true,
+      "diagnostic_note": "Gaussian alpha=5.35 envelope achieves Gabor-minimal time spread with zero tail bounce."
+    },
+    {
+      "day": 3,
+      "metric_id": "day3_phase_deviation",
+      "name": "Phase Accuracy (20 Hz - 18 kHz)",
+      "condition": "Linear Phase flat vs PRaT Hilbert target",
+      "measured": "Lin \u00b10.00000\u00b0 | PRaT Hilbert \u00b10.0004\u00b0",
+      "measured_value": 8.142219984546603e-12,
+      "threshold": "Lin <= \u00b10.05\u00b0 & PRaT Hilbert <= \u00b10.50\u00b0",
+      "passed": true,
+      "diagnostic_note": "Zero phase distortion in Linear mode; exact real-cepstrum Hilbert trajectory in PRaT."
+    },
+    {
+      "day": 3,
+      "metric_id": "day3_group_delay",
+      "name": "Group Delay (Ripple & 20 kHz Rise)",
+      "condition": "Linear constant delay vs PRaT bounded rise",
+      "measured": "Lin \u00b10.00000 ms | PRaT rise 0.249 ms",
+      "measured_value": 0.2486736755483443,
+      "threshold": "Lin <= \u00b10.005 ms & PRaT rise < 0.80 ms",
+      "passed": true,
+      "diagnostic_note": "Linear bulk delay 2.66 ms vs PRaT 0.09 ms (22x faster wavefront)."
+    },
+    {
+      "day": 3,
+      "metric_id": "day3_interchannel_phase",
+      "name": "Inter-Channel Phase Match (L vs. R)",
+      "condition": "20 Hz - 20 kHz across Linear & PRaT",
+      "measured": "\u00b10.000000\u00b0",
+      "measured_value": 0.0,
+      "threshold": "<= \u00b10.001\u00b0",
+      "passed": true,
+      "diagnostic_note": "Bit-identical L/R phase locks stereo phantom image height and depth."
+    },
+    {
+      "day": 3,
+      "metric_id": "day3_live_vca_crossfade",
+      "name": "Live VCA Crossfade (Filter / EQ / Pure Toggle)",
+      "condition": "440 Hz @ -6 dBFS live transitions (>5 kHz click & \u0394\u00b2x[n])",
+      "measured": "Click -136.3 dBFS (>5 kHz), \u0394\u00b2 spike 0.000000",
+      "measured_value": -136.27306565652026,
+      "threshold": "Click <= -100.0 dBFS & \u0394\u00b2 spike == 0",
+      "passed": true,
+      "diagnostic_note": "C^1 raised-cosine 500ms filter VCA & 10ms one-pole smoothers guarantee zero pops."
+    },
+    {
+      "day": 4,
+      "metric_id": "day4_vintage_safety_pad",
+      "name": "Vintage Hardware Safety Pad Headroom",
+      "condition": "997 Hz @ -1 dBFS + Vector A (+2.97 dBTP) @ -3.5/-6 dB Pad",
+      "measured": "Gain err +0.0000 dB, THD+N -140.9 dB, 0 lim hits",
+      "measured_value": 0.0,
+      "threshold": "Gain \u00b10.005 dB, THD+N <= -140 dB, 0% limiter action",
+      "passed": true,
+      "diagnostic_note": "Pure linear reconstruction of +2.97 & +5.11 dBTP ISPs with 0% compression."
+    },
+    {
+      "day": 4,
+      "metric_id": "day4_hard_safety_limiter",
+      "name": "Hard Safety Limiter (+3.01 & +5.8 dBTP, Pad=0 dB)",
+      "condition": "ISP torture + 200ms +3 dBFS burst recovery",
+      "measured": "0 samples > 0 dBFS, 0 wraps, 21.5 ms recovery",
+      "measured_value": 21.519274376417233,
+      "threshold": "0 samples > 0 dBFS, 0 wraps, recovery < 50 ms",
+      "passed": true,
+      "diagnostic_note": "Zero-overshoot safety clamp prevents digital crackles with fast smooth release."
+    },
+    {
+      "day": 4,
+      "metric_id": "day4_tpdf_histogram",
+      "name": "24-Bit TPDF Histogram & RMS Floor",
+      "condition": "10.0s Digital Zero (24-bit Int out)",
+      "measured": "RMS -141.48 dBFS, DC 0.00003 LSB, PMF [0.125,0.750,0.125]",
+      "measured_value": -141.47925556490515,
+      "threshold": "Triangular [-1,0,+1] LSB, RMS -141.5 \u00b1 0.3 dBFS, DC < 0.001 LSB",
+      "passed": true,
+      "diagnostic_note": "Exact 2-LSB triangular dither decorrelates all quantization moments."
+    },
+    {
+      "day": 4,
+      "metric_id": "day4_tpdf_whiteness",
+      "name": "TPDF Spectral Whiteness (Zero Idle Tones)",
+      "condition": "10.0s Digital Zero PSD (20 Hz - fs/2)",
+      "measured": "\u00b10.134 dB flatness",
+      "measured_value": 0.134113416626235,
+      "threshold": "Flat PSD (\u00b10.25 dB), zero idle tones",
+      "passed": true,
+      "diagnostic_note": "xorshift64* PRNG produces pure thermal-white noise with zero periodic limit cycles."
+    },
+    {
+      "day": 4,
+      "metric_id": "day4_sub_lsb_resolution",
+      "name": "Sub-LSB Sine Resolution @ -150.0 dBFS",
+      "condition": "997 Hz @ -150 dBFS (11.5 dB below 24th bit, 32x avg 262k-FFT)",
+      "measured": "-150.00 dBFS (H3 -214.8, H5 -206.3 dBFS)",
+      "measured_value": -149.99917049944528,
+      "threshold": "-150.0 \u00b1 0.30 dBFS, zero H3/H5 spurs",
+      "passed": true,
+      "diagnostic_note": "Resolves signals 11.5 dB quieter than 1 LSB cleanly with zero harmonic granulation."
+    },
+    {
+      "day": 4,
+      "metric_id": "day4_noise_modulation",
+      "name": "High-Band Noise Modulation (40 Hz Sweep)",
+      "condition": "40 Hz conditioning sweep, 2 kHz - 20 kHz noise RMS",
+      "measured": "0.0216 dB shift",
+      "measured_value": 0.021642152521621938,
+      "threshold": "< 0.05 dB",
+      "passed": true,
+      "diagnostic_note": "Wannamaker 2-LSB TPDF theorem: error variance is 100% invariant to bass swings."
+    }
+  ],
+  "details": {
+    "day1": {
+      "plot": "reports/loopback/plots/day1_freq_and_stopband.png",
+      "spot_check_linear_db": {
+        "10": -0.001683,
+        "20": 0.0,
+        "100": 0.0,
+        "997": 0.0,
+        "10000": -0.0,
+        "18000": 0.0,
+        "19000": -4e-06,
+        "19500": -0.005923,
+        "20000": -0.601073,
+        "21000": -30.95366,
+        "22000": -144.802184
+      },
+      "spot_check_min_phase_db": {
+        "10": -0.00177,
+        "20": 0.0,
+        "100": 0.0,
+        "997": 0.0,
+        "10000": -0.0,
+        "18000": 0.0,
+        "19000": -4e-06,
+        "19500": -0.005923,
+        "20000": -0.601073,
+        "21000": -30.95366,
+        "22000": -144.800866
+      },
+      "ccif_1khz_imd_dbfs": -234.91,
+      "sync_stopband_atten_db": 183.18,
+      "async_stopband_atten_db": 183.39
+    },
+    "day2": {
+      "plot": "reports/loopback/plots/day2_thdn_matrix.png",
+      "rate_matrix_24bit_tpdf": {
+        "1:1 Native 44.1k": {
+          "thdn_db": -140.88,
+          "sfdr_dbc": 178.48
+        },
+        "1:1 Native 48k": {
+          "thdn_db": -141.28,
+          "sfdr_dbc": 182.13
+        },
+        "1:1 Native 96k": {
+          "thdn_db": -144.19,
+          "sfdr_dbc": 178.46
+        },
+        "1:1 Native 192k": {
+          "thdn_db": -147.21,
+          "sfdr_dbc": 181.12
+        },
+        "2x Int 44.1k->88.2k": {
+          "thdn_db": -143.85,
+          "sfdr_dbc": 180.54
+        },
+        "4x Int 44.1k->176.4k": {
+          "thdn_db": -146.8,
+          "sfdr_dbc": 178.84
+        },
+        "2x Int 48k->96k": {
+          "thdn_db": -144.2,
+          "sfdr_dbc": 178.37
+        },
+        "4x Int 48k->192k": {
+          "thdn_db": -147.24,
+          "sfdr_dbc": 180.22
+        },
+        "Async 44.1k->96k": {
+          "thdn_db": -144.21,
+          "sfdr_dbc": 178.27
+        },
+        "Async 44.1k->192k": {
+          "thdn_db": -147.26,
+          "sfdr_dbc": 180.87
+        }
+      },
+      "pole_stress_41hz_192k_thdn_db": -147.33,
+      "slew_6997hz_thdn_db": -146.93,
+      "float32_thdn_db": -152.05,
+      "multitone_tdn_db": -147.95,
+      "multitone_grass_dbfs": -194.68
+    },
+    "day3": {
+      "plot": "reports/loopback/plots/day3_impulse_and_phase.png",
+      "linear_symmetry_error_pct": 0.0,
+      "prat_pre_causal_dbfs": -260.0,
+      "prat_decay_below_120db_ms": 3.359,
+      "live_vca_click_above_5khz_dbfs": -136.27
+    },
+    "day4": {
+      "plot": "reports/loopback/plots/day4_isp_and_dither.png",
+      "vector_a_true_peak_dbtp": 2.97,
+      "vector_b_true_peak_dbtp": 5.11,
+      "limiter_recovery_ms": 21.52,
+      "tpdf_rms_aes17_dbfs": -141.48,
+      "sub_lsb_m150_measured_dbfs": -150.0,
+      "noise_mod_shift_db": 0.0216
+    }
+  }
+}

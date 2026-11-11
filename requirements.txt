@@ -1,0 +1,6 @@
+numpy==2.2.6; python_version < "3.14"
+numpy==2.3.5; python_version >= "3.14"
+scipy==1.15.3; python_version < "3.14"
+scipy==1.16.3; python_version >= "3.14"
+matplotlib==3.10.3; python_version < "3.14"
+matplotlib==3.10.7; python_version >= "3.14"
